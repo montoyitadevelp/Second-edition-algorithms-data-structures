@@ -20,7 +20,6 @@ function exampleQuadratic(n) {
 
 exampleQuadratic(5);
 
-
 //O(n^3) Tiempo cubico, debe hacer n^3 operaciones. Un for anidado se multiplica por si mismo
 function exampleCubic(n) {
     for (let i = 0; i < n; i++) {
@@ -43,8 +42,7 @@ function exampleLogarithmic(n) {
     }
 }
 
-exampleLogarithmic(1000000) //Solo lo hace 19.9315686 veces
-
+exampleLogarithmic(1000000); //Solo lo hace 19.9315686 veces
 
 //Regla del coeficiente de O(n) If f(n) is O(g(n)), then kf(n) is O(g(n)), for any constant k > 0.
 function a(n) {
@@ -52,7 +50,7 @@ function a(n) {
     for (let i = 0; i < n; i++) {
         count += 1;
     }
-    console.log(count)
+    console.log(count);
     return count;
 }
 
@@ -79,4 +77,47 @@ function c(n) {
     return count;
 }
 
-console.log(c(10))
+//console.log(c(10))
+
+//Regla de la suma If f(n) is O(h(n)) and g(n) is O(p(n)), then f(n)+g(n) is O(h(n)+p(n))
+//Es importante aplicar la regla del coeficiente antes de la suma
+function d(n) {
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+        count += 1;
+    }
+    for (let i = 0; i < 5 * n; i++) {
+        count += 1;
+    }
+    return count;
+}
+//console.log(d(10))
+
+
+//Regla del producto
+//La regla del producto simplemente indica cómo se pueden multiplicar los Big-O.
+//If f(n) es O(h(n)) and g(n) es O(p(n)), then f(n)g(n) is O(h(n)p(n)
+function e(n) {
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+        count += 1;
+        for (let i = 0; i < 5 * n; i++) {
+            count += 1;
+        }
+    }
+    return count;
+}
+
+//console.log(e(10))
+
+//Regla del polinomio
+//If f(n) is a polynomial of degree k, then f(n) is O(n^k)
+function f(n) {
+    let count = 0;
+    for (let i = 0; i < n * n; i++) {
+        count += 1;
+    }
+    return count;
+}
+
+console.log(f(10))
