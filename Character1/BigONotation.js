@@ -160,4 +160,18 @@ function primeFactors(n) {
     console.log(n);
   }
 }
-primeFactors(50)
+//primeFactors(50);
+
+// O(n)
+function modularExponentiation(base, exponencial, module) {
+  if (module === 1) return 0;
+  let result = 1;
+
+  for (let i = 0; i < exponencial; i++) {
+    result = (result * base) % module;
+    console.log(result)
+  }
+
+  return result
+}
+modularExponentiation(2, 5, 5)
