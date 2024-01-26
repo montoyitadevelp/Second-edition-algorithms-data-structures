@@ -1,3 +1,5 @@
+import isPrime from "./Nums.js";
+
 function existsInString(stringValue, search) {
   return stringValue.indexOf(search) !== -1;
 }
@@ -59,3 +61,91 @@ console.log('ID: ' + queryString['product_id']); // ID: 2140
 console.log('Name: ' + queryString['product_name']); // Name: undefined
 console.log('Category: ' + queryString['category']);
 
+btoa('hello I love learning to computer program');
+// aGVsbG8gSSBsb3ZlIGxlYXJuaW5nIHRvIGNvbXB1dGVyIHByb2dyYW0
+atob('aGVsbG8gSSBsb3ZlIGxlYXJuaW5nIHRvIGNvbXB1dGVyIHByb2dyYW0');
+// hello I love learning to computer program
+
+let DICTIONARY =
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.split('');
+
+function encodeId(num) {
+  let base = DICTIONARY.length;
+  let encoded = '';
+
+  if (num === 0) {
+    return DICTIONARY[0];
+  }
+
+  while (num > 0) {
+    encoded += DICTIONARY[num % base];
+    num = Math.floor(num / base);
+  }
+
+  return reverseWord(encoded);
+}
+
+function reverseWord(str) {
+  let reversed = '';
+  for (let i = str.length - 1; i >= 0; i--) {
+    reversed += str.charAt(i);
+  }
+  return reversed;
+}
+
+function decodeId(id) {
+  let base = DICTIONARY.length;
+  let decoded = 0;
+
+  for (let index = 0; index < id.split('').length; index++) {
+    decoded = decoded * base + DICTIONARY.indexOf(id.charAt(index));
+  }
+
+  return decoded;
+}
+
+console.log(encodeId(11231230)); // prints 'VhU2'
+console.log(decodeId('VhU2')); // prints '11231230'
+function modInverse(e, phi) {
+  let m0 = phi,
+    t,
+    q;
+  let x0 = 0,
+    x1 = 1;
+
+  if (phi == 1) return 0;
+
+  while (e > 1) {
+    // q is quotient
+    q = Math.floor(e / phi);
+    t = phi;
+    // phi is remainder now, process same as
+    // Euclid's algo
+    (phi = e % phi), (e = t);
+    t = x0;
+    x0 = x1 - q * x0;
+    x1 = t;
+  }
+
+  // Make x1 positive
+  if (x1 < 0) x1 += m0;
+  return x1;
+}
+
+function RSAKeyPair(p, q) {
+  // Need to check that they are primes
+  if (!(isPrime(p) && isPrime(q))) return;
+
+  // Need to check that they're not the same
+  if (p == q) return;
+
+  let n = p * q, phi = (p - 1) * (q - 1), e = 3, d = modInverse(e, phi);
+
+  // Public key: [e,n], Private key: [d,n]
+  return [
+    [e, n],
+    [d, n],
+  ];
+}
+
+console.log(RSAKeyPair(5,11))

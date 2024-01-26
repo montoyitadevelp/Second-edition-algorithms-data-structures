@@ -1,5 +1,5 @@
 //Algoritmo de numero primo O(sqrt(n))
-function isPrime(n) {
+export default function isPrime(n) {
   if (n <= 1) return false;
   if (n <= 3) return true;
 
