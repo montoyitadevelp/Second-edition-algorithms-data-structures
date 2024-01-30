@@ -84,3 +84,4 @@ function arrayNUglyNumbers(n) {
   return uglyNumbers;
 }
 //console.log(arrayNUglyNumbers(7))
+
