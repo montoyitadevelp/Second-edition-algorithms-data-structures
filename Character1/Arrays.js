@@ -57,15 +57,15 @@ function medianOfTwoSortedArray(arr1, arr2, pos) {
     return (Math.max(arr1[0], arr2[0]) + Math.min(arr1[1], arr2[1])) / 2;
   }
 
-   let median1 = medianOfArray(arr1)
-   let median2 = medianOfArray(arr2);
+  let median1 = medianOfArray(arr1);
+  let median2 = medianOfArray(arr2);
 
   if (median1 == median2) {
     return median1;
   }
 
-  let evenOffset = pos % 2 == 0 ? 1 : 0
-  let offsetMinus = Math.floor(pos / 2) - evenOffset
+  let evenOffset = pos % 2 == 0 ? 1 : 0;
+  let offsetMinus = Math.floor(pos / 2) - evenOffset;
   let offsetPlus = Math.floor(pos / 2) + evenOffset;
 
   if (median1 < median2) {
@@ -83,6 +83,48 @@ function medianOfTwoSortedArray(arr1, arr2, pos) {
   }
 }
 
-console.log(medianOfTwoSortedArray([1, 2, 3], [4, 5, 6], 3)) // 3.5
-console.log(medianOfTwoSortedArray([11, 23, 24], [32, 33, 450], 3)) // 28
-console.log(medianOfTwoSortedArray([1, 2, 3], [2, 3, 5], 3)) // 2.5
+/* console.log(medianOfTwoSortedArray([1, 2, 3], [4, 5, 6], 3)); // 3.5
+console.log(medianOfTwoSortedArray([11, 23, 24], [32, 33, 450], 3)); // 28
+console.log(medianOfTwoSortedArray([1, 2, 3], [2, 3, 5], 3)); // 2.5 */
+
+function commonElements(kArray) {
+  let hashmap = {};
+  let last = [];
+  let answer = [];
+  for (let i = 0; i < kArray.length; i++) {
+    let currentArray = kArray[i];
+    last = null;
+    for (let j = 0; j < currentArray.length; j++) {
+      let currentElement = currentArray[j];
+      if (last !== currentElement) {
+        if (!hashmap[currentElement]) {
+          hashmap[currentElement] = 1;
+        } else {
+          hashmap[currentElement]++;
+        }
+      }
+      last = currentElement;
+    }
+  }
+  // Iterate through hashmap
+  for (let prop in hashmap) {
+    if (hashmap[prop] == kArray.length) {
+      answer.push(parseInt(prop));
+    }
+  }
+  return answer;
+}
+commonElements([
+  [1, 2, 3],
+  [1, 2, 3, 4],
+  [1, 2],
+]);
+
+function Matrix(rows, columns) {
+  let jaggedarray = new Array(rows);
+  for (var i = 0; i < columns; i++) {
+    jaggedarray[i] = new Array(rows);
+  }
+  return jaggedarray;
+}
+Matrix(3, 3)
