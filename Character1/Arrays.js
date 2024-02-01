@@ -127,4 +127,42 @@ function Matrix(rows, columns) {
   }
   return jaggedarray;
 }
-Matrix(3, 3)
+Matrix(3, 3);
+
+let input = [
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9, 10, 11, 12],
+  [13, 14, 15, 16],
+];
+
+function run(input, result) {
+  if (input.length == 0) {
+    return result;
+  }
+
+  // add the first row to result
+  result = result.concat(input.shift());
+
+  // add the last element of each remaining row
+  for (let i = 0; i < input.length; i++) {
+    result.push(input[i].pop());
+  }
+
+  // add the last row in reverse order
+  result = result.concat(input.pop().reverse());
+
+  // add the first element in each remaining row (going upwards)
+  let tmp = [];
+
+  for (let i = 0; i < input.length; i++) {
+    tmp.push(input[i].shift());
+  }
+  result = result.concat(tmp.reverse());
+  console.log('result', result);
+  return run(input, result);
+}
+
+let result = run(input, []);
+
+
