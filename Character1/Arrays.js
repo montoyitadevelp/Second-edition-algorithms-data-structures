@@ -159,10 +159,156 @@ function run(input, result) {
     tmp.push(input[i].shift());
   }
   result = result.concat(tmp.reverse());
-  console.log('result', result);
+  //console.log('result', result);
   return run(input, result);
 }
 
 let result = run(input, []);
 
+function checkRow(rowArr, letter) {
+  for (let i = 0; i < 3; i++) {
+    if (rowArr[i] != letter) {
+      return false;
+    }
+  }
+  return true;
+}
 
+function checkColumn(gameBoardMatrix, columnIndex, letter) {
+  for (let i = 0; i < 3; i++) {
+    if (gameBoardMatrix[i][columnIndex] != letter) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function ticTacToeWinner(gameBoardMatrix, letter) {
+  // Check rows
+  let rowWin =
+    checkRow(gameBoardMatrix[0], letter) ||
+    checkRow(gameBoardMatrix[1], letter) ||
+    checkRow(gameBoardMatrix[2], letter);
+
+  let colWin =
+    checkColumn(gameBoardMatrix, 0, letter) ||
+    checkColumn(gameBoardMatrix, 1, letter) ||
+    checkColumn(gameBoardMatrix, 2, letter);
+
+  let diagonalWinLeftToRight =
+    gameBoardMatrix[0][0] == letter &&
+    gameBoardMatrix[1][1] == letter &&
+    gameBoardMatrix[2][2] == letter;
+  let diagonalWinRightToLeft =
+    gameBoardMatrix[0][2] == letter &&
+    gameBoardMatrix[1][1] == letter &&
+    gameBoardMatrix[2][0] == letter;
+
+  return rowWin || colWin || diagonalWinLeftToRight || diagonalWinRightToLeft;
+}
+
+let board = [
+  ['O', '-', 'X'],
+  ['-', 'O', '-'],
+  ['-', 'X', 'O'],
+];
+ticTacToeWinner(board, 'X'); // false
+ticTacToeWinner(board, 'O'); // true
+
+let board1 = `%e%%%%%%%%%\n
+ %...%.%...%\n
+ %.%.%.%.%%%\n
+ %.%.......%\n
+ %.%%%%.%%.%\n
+ %.%.....%.%\n
+%%%%%%%%%x%`;
+let rows = board1.split('\n');
+function generateColumnArr(arr) {
+  return arr.split('');
+}
+let mazeMatrix = rows.map(generateColumnArr);
+
+function findChar(char, mazeMatrix) {
+  let row = mazeMatrix.length;
+  let column = mazeMatrix[0].length;
+
+  for (let i = 0; i < row; i++) {
+    for (let j = 0; j < column; j++) {
+      if (mazeMatrix[i][j] == char) {
+        return [i, j];
+      }
+    }
+  }
+}
+
+function printMatrix(matrix) {
+  let mazePrintStr = '';
+  let row = matrix.length;
+  let column = matrix[0].length;
+
+  for (let i = 0; i < row; i++) {
+    for (let j = 0; j < column; j++) {
+      mazePrintStr += mazeMatrix[i][j];
+    }
+    mazePrintStr += '\n';
+  }
+  console.log(mazePrintStr);
+}
+
+function mazePathFinder(mazeMatrix) {
+  let row = mazeMatrix.length;
+  let column = mazeMatrix[0].length;
+  let startPos = findChar('e', mazeMatrix);
+  let endPos = findChar('x', mazeMatrix);
+  path(startPos[0], startPos[1]);
+  function path(x, y) {
+    if (x > row - 1 || y > column - 1 || x < 0 || y < 0) {
+      return false;
+    }
+    // Found
+    if (x == endPos[0] && y == endPos[1]) {
+      return true;
+    }
+    if (mazeMatrix[x][y] == '%' || mazeMatrix[x][y] == '+') {
+      return false;
+    }
+    // Mark the current spot
+    mazeMatrix[x][y] = '+';
+    printMatrix(mazeMatrix);
+    if (path(x, y - 1) || path(x + 1, y) || path(x, y + 1) || path(x - 1, y)) {
+      return true;
+    }
+    mazeMatrix[x][y] = '.';
+    return false;
+  }
+}
+
+let matrix = [
+  [1, 0, 1],
+  [0, 0, 1],
+  [1, 1, 1],
+];
+
+function rotateMatrix90Left(mat) {
+  let N = mat.length;
+
+  // Consider all squares one by one
+  for (let x = 0; x < N / 2; x++) {
+    // Consider elements in group of 4 in
+    // current square
+    for (let y = x; y < N - x - 1; y++) {
+      // store current cell in temp variable
+      let temp = mat[x][y];
+      // move values from right to top
+      mat[x][y] = mat[y][N - 1 - x];
+      // move values from bottom to right
+      mat[y][N - 1 - x] = mat[N - 1 - x][N - 1 - y];
+      // move values from left to bottom
+      mat[N - 1 - x][N - 1 - y] = mat[N - 1 - y][x];
+      // assign temp to left
+      mat[N - 1 - y][x] = temp;
+    }
+  }
+}
+rotateMatrix90Left(matrix);
+console.log(matrix)// [[1,1,1],[0,0,1],[1,0,1]
