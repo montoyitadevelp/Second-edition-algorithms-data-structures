@@ -35,7 +35,7 @@ La regla del producto simplemente indica cómo se pueden multiplicar los Big-O.
 
 ### Regla polinómica
 
-La regla polinómica establece que las complejidades de tiempo polinómico tienen una notación Big-O de  el mismo grado polinómico. Matemáticamente, es como sigue:
+La regla polinómica establece que las complejidades de tiempo polinómico tienen una notación Big-O de el mismo grado polinómico. Matemáticamente, es como sigue:
 
 - Si f(n) es un polinomio de grado k, entonces f(n) es O(nk)
 
@@ -47,3 +47,9 @@ Big-O es importante para analizar y comparar la eficiencia de los algoritmos. El
 - Suma de Big-Os (regla de la suma)
 - Multiplicación de Big-Os (regla del producto)
 - Determinación del polinomio de la notación Big-O observando bucles (regla del polinomio)
+
+### Recursividad
+
+En matemáticas, lingüística y arte, la recursividad se refiere a la ocurrencia de una cosa definida en términos de sí misma. En informática, una función recursiva es una función que se llama a sí misma. Las funciones recursivas suelen ser elegantes y resuelven problemas complejos mediante el método "divide y vencerás". La recursividad es importante porque la verás una y otra vez en la implementación de diversas estructuras de datos
+
+![Recursividad](https://uniwebsidad.com/static/libros/imagenes/algoritmos-python/f1801.png)
