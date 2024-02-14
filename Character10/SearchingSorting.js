@@ -69,3 +69,59 @@ function selectionSort(items) {
   return items;
 }
 console.log(selectionSort([6, 1, 23, 4, 2, 3]));
+
+function insertionSort(items) {
+  let value; // the value currently being compared
+  let i; // index into unsorted section
+  let j; // index into sorted section
+
+  for (i = 0; i < items.length; i++) {
+    // store the current value because it may shift later
+    value = items[i]; // 1
+
+    // Whenever the value in the sorted section is greater than the value
+    // in the unsorted section, shift all items in the sorted section
+    // over by one. This creates space in which to insert the value.
+
+    for (j = i - 1; j > -1 && items[j] > value; j--) {
+      items[j + 1] = items[j];
+    }
+    items[j + 1] = value;
+  }
+  return items;
+}
+console.log(insertionSort([6, 1, 23, 4, 2, 3]));
+
+function quickSort(arr, left, right) {
+  if (left < right) {
+    let partitionPos = partition(arr, left, right);
+    quickSort(arr, left, partitionPos - 1);
+    quickSort(arr, partitionPos + 1, right);
+  }
+  return arr
+}
+
+function partition(arr, left, right) {
+  let i = left; // 0
+  let j = right - 1; // 0
+  let pivot = arr[right];
+
+  while (i < j) {
+    while (i < right && arr[i] < pivot) {
+      i++;
+    }
+    while (j > left && arr[j] >= pivot) {
+      j--;
+    }
+    if (i < j) {
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  if (arr[i] > pivot) {
+    [arr[i], arr[right]] = [arr[right], arr[i]];
+  }
+  return i;
+}
+
+let arr = [6, 1, 23, 4, 2, 3];
+console.log(quickSort(arr, 0, arr.length - 1))
