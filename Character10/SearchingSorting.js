@@ -98,7 +98,7 @@ function quickSort(arr, left, right) {
     quickSort(arr, left, partitionPos - 1);
     quickSort(arr, partitionPos + 1, right);
   }
-  return arr
+  return arr;
 }
 
 function partition(arr, left, right) {
@@ -124,4 +124,91 @@ function partition(arr, left, right) {
 }
 
 let arr = [6, 1, 23, 4, 2, 3];
-console.log(quickSort(arr, 0, arr.length - 1))
+console.log(quickSort(arr, 0, arr.length - 1));
+
+function _partition(arr, low, high) {
+  let pivot = arr[high];
+  let pivotloc = low;
+  for (let i = low; i <= high; i++) {
+    // inserting elements of less value
+    // to the left of the pivot location
+    if (arr[i] < pivot) {
+      let temp = arr[i];
+      arr[i] = arr[pivotloc];
+      arr[pivotloc] = temp;
+      pivotloc++;
+    }
+  }
+
+  // swapping pivot to the final pivot location
+  let temp = arr[high];
+  arr[high] = arr[pivotloc];
+  arr[pivotloc] = temp;
+
+  return pivotloc;
+}
+
+// finds the kth position (of the sorted array)
+// in a given unsorted array i.e this function
+// can be used to find both kth largest and
+// kth smallest element in the array.
+// ASSUMPTION: all elements in arr[] are distinct
+function kthSmallest(arr, low, high, k) {
+  // find the partition
+  let partition = _partition(arr, low, high);
+
+  // if partition value is equal to the kth position,
+  // return value at k.
+  if (partition == k - 1) {
+    return arr[partition];
+  } else if (partition < k - 1) {
+    // if partition value is less than kth position,
+    // search right side of the array.
+    return kthSmallest(arr, partition + 1, high, k);
+  } else {
+    // if partition value is more than kth position,
+    // search left side of the array.
+    return kthSmallest(arr, low, partition - 1, k);
+  }
+}
+
+// Driver Code
+let array = [10, 4, 5, 8, 6, 11, 26];
+let arraycopy = [10, 4, 5, 8, 6, 11, 26];
+let kPosition = 3;
+let length = array.length;
+
+console.log(kthSmallest(arraycopy, 0, array.length - 1, kPosition));
+
+function merge(leftA, rightA) {
+  let results = [];
+  let leftIndex = 0;
+  let rightIndex = 0;
+
+  while (leftIndex < leftA.length && rightIndex < rightA.length) {
+    if (leftA[leftIndex] < rightA[rightIndex]) {
+      results.push(leftA[leftIndex++]);
+    } else {
+      results.push(rightA[rightIndex++]);
+    }
+  }
+  let leftRemains = leftA.slice(leftIndex);
+  let rightRemains = rightA.slice(rightIndex);
+
+
+  // add remaining to resultant array
+  return results.concat(leftRemains).concat(rightRemains);
+}
+
+function mergeSort(array) {
+  if (array.length < 2) {
+    return array; // Base case: array is now sorted since it's just 1 element
+  }
+
+  let midpoint = Math.floor(array.length / 2);
+  let leftArray = array.slice(0, midpoint);
+  let rightArray = array.slice(midpoint);
+
+  return merge(mergeSort(leftArray), mergeSort(rightArray));
+}
+console.log(mergeSort([6, 1, 23, 4, 2, 3]))
