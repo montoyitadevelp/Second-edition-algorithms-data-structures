@@ -195,7 +195,6 @@ function merge(leftA, rightA) {
   let leftRemains = leftA.slice(leftIndex);
   let rightRemains = rightA.slice(rightIndex);
 
-
   // add remaining to resultant array
   return results.concat(leftRemains).concat(rightRemains);
 }
@@ -211,4 +210,148 @@ function mergeSort(array) {
 
   return merge(mergeSort(leftArray), mergeSort(rightArray));
 }
-console.log(mergeSort([6, 1, 23, 4, 2, 3]))
+console.log(mergeSort([6, 1, 23, 4, 2, 3]));
+
+function countSort(array) {
+  let hash = {};
+  let countArr = [];
+  for (var i = 0; i < array.length; i++) {
+    if (!hash[array[i]]) {
+      hash[array[i]] = 1;
+    } else {
+      hash[array[i]]++;
+    }
+  }
+
+  for (let key in hash) {
+    // for any number of _ element, add it to array
+    for (let i = 0; i < hash[key]; i++) {
+      countArr.push(parseInt(key));
+    }
+  }
+
+  return countArr;
+}
+
+countSort([6, 1, 23, 2, 3, 2, 1, 2, 2, 3, 3, 1, 123, 123, 4, 2, 3]);
+
+let array1 = [12, 3, 4, 2, 1, 34, 23];
+array1.sort();
+
+let array2 = [12, 3, 4, 2, 1, 34, 23];
+
+function comparatorNumber(a, b) {
+  return a - b;
+}
+
+array1.sort(comparatorNumber);
+
+function sqrtInt(number) {
+  if (number == 0 || number == 1) return number;
+
+  let start = 1;
+  let end = number;
+  let ans;
+
+  while (start <= end) {
+    let mid = parseInt((start + end) / 2);
+
+    if (mid * mid == number) return mid;
+
+    if (mid * mid < number) {
+      start = mid + 1; // use the upper section
+      ans = mid;
+    } else {
+      end = mid - 1; // use the lower section
+    }
+  }
+  return ans;
+}
+console.log(sqrtInt(9));
+
+function sqrtDouble(number) {
+  let threshold = 0.1;
+  //9 try middle,
+  let upper = number;
+  let lower = 0;
+  let middle;
+  while (upper - lower > threshold) {
+    middle = (upper + lower) / 2;
+    if (middle * middle > number) {
+      upper = middle;
+    } else {
+      lower = middle;
+    }
+  }
+  return middle;
+}
+sqrtDouble(9); //  3.0234375
+
+function findTwoSum(array, sum) {
+  let store = {};
+
+  for (let i = 0; i < array.length; i++) {
+    if (store[array[i]]) {
+      return true;
+    } else {
+      store[sum - array[i]] = array[i];
+    }
+  }
+  return false;
+}
+console.log(findTwoSum([1, 2, 3, 4, 5], 6));
+
+let mythical = ['dragon', 'slayer', 'magic', 'wizard of oz', 'ned stark'];
+
+function sortComparator(a, b) {
+  return a.length - b.length;
+}
+mythical.sort(sortComparator);
+
+let mythical2 = [
+  { prop1: '', prop2: '' },
+  { prop1: '', prop2: '', prop3: '' },
+  { prop1: '', prop2: '' },
+];
+
+function sortComparator(a, b) {
+  return Object.keys(a).length - Object.keys(b).length;
+}
+
+mythical2.sort(sortComparator);
+
+function wordCount(sentence) {
+  // period with nothing so it doesn't count as word
+  let wordsArray = sentence.replace(/[.]/g, '').split(' ')
+  let occurenceList = {}
+  let answerList = {}
+
+  for (let i = 0, wordsLength = wordsArray.length; i < wordsLength; i++) {
+    let currentWord = wordsArray[i];
+    // doesn't exist, set as 1st occurrence
+    if (!occurenceList[currentWord]) {
+      occurenceList[currentWord] = 1;
+    } else {
+      occurenceList[currentWord]++; // add occurrences
+    }
+  }
+
+  let arrayTemp = [];
+  // push the value and key as fixed array
+  for (let prop in occurenceList) {
+    arrayTemp.push([occurenceList[prop], prop]);
+  }
+
+  function sortcomp(a, b) {
+    return b[0] - a[0]; // compare the first element of the array
+  }
+
+  arrayTemp.sort(sortcomp); //sort
+
+  for (let i = 0, arrlength = arrayTemp.length; i < arrlength; i++) {
+    let current = arrayTemp[i];
+    answerList[current[1]] = current[0]; // key value pairs
+  }
+  return answerList;
+}
+wordCount('practice makes perfect. get perfect by practice. just practice');
