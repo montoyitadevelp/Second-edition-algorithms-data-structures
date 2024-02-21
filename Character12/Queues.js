@@ -79,7 +79,7 @@ QueueStack.prototype.push = function (val) {
 };
 
 QueueStack.prototype.pop = function () {
-  let size = this.inbox.array.length - 1;
+  let size = this.inbox.array?.length - 1;
   let counter = 0;
   let bufferQueue = new Queue();
 
@@ -142,3 +142,48 @@ cashier.addOrder(customer3);
 cashier.deliverOrder(); // Jim, your Fries is ready!
 cashier.deliverOrder(); // Sammie, your Burger is ready!
 cashier.deliverOrder(); // Peter, your Drink is ready!
+
+function isParenthesisValid(validationString) {
+  let stack = new Stack();
+  for (let pos = 0; pos < validationString.length; pos++) {
+    let currentChar = validationString.charAt(pos);
+    if (currentChar == '(') {
+      stack.push(currentChar);
+    } else if (currentChar == ')') {
+      if (stack.isEmpty()) return false;
+
+      stack.pop();
+    }
+  }
+  return stack.isEmpty();
+}
+console.log(isParenthesisValid('()(()'));
+
+class sortableStack {
+  constructor(size) {
+    this.size = size;
+
+    this.mainStack = new Stack();
+    this.sortedStack = new Stack();
+
+    // let's initialize it with some random ints
+    for (let i = 0; i < this.size; i++) {
+      this.mainStack.push(Math.floor(Math.random() * 11));
+    }
+  }
+}
+
+sortableStack.prototype.sortStackDescending = function () {
+  while (!this.mainStack.isEmpty()) {
+    let temp = this.mainStack.pop();
+    while (!this.sortedStack.isEmpty() && this.sortedStack.peek() < temp) {
+      this.mainStack.push(this.sortedStack.pop());
+    }
+    this.sortedStack.push(temp);
+  }
+};
+
+let ss = new sortableStack(10);
+console.log(ss); // [ 8, 3, 4, 4, 1, 2, 0, 9, 7, 8 ]
+ss.sortStackDescending();
+console.log(ss.sortedStack);

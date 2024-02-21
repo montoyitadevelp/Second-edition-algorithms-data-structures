@@ -215,7 +215,7 @@ console.log(mergeSort([6, 1, 23, 4, 2, 3]));
 function countSort(array) {
   let hash = {};
   let countArr = [];
-  for (var i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     if (!hash[array[i]]) {
       hash[array[i]] = 1;
     } else {
