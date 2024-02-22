@@ -31,9 +31,9 @@ console.log(binarySearch([1, 2, 3, 4], 5)); // -1
 //Time complexity: O(n²)
 //Space complexity: O(1)
 function swap(array, index1, index2) {
-  let temp = array[index1]; // 6
-  array[index1] = array[index2]; // 1
-  array[index2] = temp; // 6
+  let temp = array[index1]; 
+  array[index1] = array[index2]; 
+  array[index2] = temp; 
 }
 
 function bubbleSort(array) {
